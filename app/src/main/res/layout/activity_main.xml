@@ -9,82 +9,82 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnEasy"
         android:layout_width="326dp"
         android:layout_height="90dp"
-        android:backgroundTint="#428C00"
+        android:backgroundTint="@color/lightGreen"
         android:text="Easy"
         android:textColor="#000000"
-        android:textSize="24dp"
+        android:textSize="24sp"
         app:cornerRadius="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/btnMed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDifficulty" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvSimonSays"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Simon Says"
         android:textColor="#FFFFFF"
-        android:textSize="36dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvDifficulty"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvDifficulty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Select a difficulty"
         android:textColor="#FFFFFF"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnEasy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSimonSays" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnMed"
         android:layout_width="326dp"
         android:layout_height="90dp"
         android:backgroundTint="#B8AB00"
         android:text="Medium"
         android:textColor="#000000"
-        android:textSize="24dp"
+        android:textSize="24sp"
         app:cornerRadius="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/btnHard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/btnEasy" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnHard"
         android:layout_width="326dp"
         android:layout_height="90dp"
-        android:backgroundTint="#B40000"
+        android:backgroundTint="@color/darkRed"
         android:text="Hard"
         android:textColor="#000000"
-        android:textSize="24dp"
+        android:textSize="24sp"
         app:cornerRadius="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintBottom_toTopOf="@+id/btnStartGame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/btnMed" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/btnStartGame"
         android:layout_width="326dp"
         android:layout_height="90dp"
-        android:backgroundTint="#002C9B"
+        android:backgroundTint="@color/darkBlue"
         android:text="Start Game"
         android:textColor="#000000"
-        android:textSize="24dp"
+        android:textSize="24sp"
         app:cornerRadius="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/btnHard" />
 </androidx.constraintlayout.widget.ConstraintLayout>

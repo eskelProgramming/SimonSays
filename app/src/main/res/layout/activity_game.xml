@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:backgroundTint="#000000"
+    tools:context=".GameActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="-45dp">
+
+    <Button
+        android:id="@+id/btnRed"
+        android:layout_width="124sp"
+        android:layout_height="124sp"
+        android:backgroundTint="@color/darkRed"
+        android:text="Red"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:cornerRadius="0sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnBlue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnGreen"
+        app:layout_constraintTop_toBottomOf="@+id/tvDifficulty" />
+
+    <Button
+        android:id="@+id/btnBlue"
+        android:layout_width="124sp"
+        android:layout_height="124sp"
+        android:backgroundTint="@color/darkBlue"
+        android:text="Blue"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:cornerRadius="0sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvScore"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnYellow"
+        app:layout_constraintTop_toBottomOf="@+id/btnRed" />
+
+    <Button
+        android:id="@+id/btnGreen"
+        android:layout_width="124dp"
+        android:layout_height="124dp"
+        android:backgroundTint="@color/darkGreen"
+        android:text="Green"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:cornerRadius="0sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnYellow"
+        app:layout_constraintEnd_toStartOf="@+id/btnRed"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDifficulty" />
+
+    <TextView
+        android:id="@+id/tvDifficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Difficulty: "
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvScore"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.165" />
+
+    <TextView
+        android:id="@+id/tvScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:text="Score: "
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnReturnToHome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnYellow"
+        android:layout_width="124dp"
+        android:layout_height="124dp"
+        android:backgroundTint="@color/darkYellow"
+        android:text="Yellow"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:cornerRadius="0sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvScore"
+        app:layout_constraintEnd_toStartOf="@+id/btnBlue"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGreen" />
+
+    <Button
+        android:id="@+id/btnReturnToHome"
+        android:layout_width="305dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="44dp"
+        android:backgroundTint="@color/skyBlue"
+        android:text="Return to Home"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:cornerRadius="0sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

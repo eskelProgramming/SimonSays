@@ -6,11 +6,13 @@ import android.view.View
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
     private var difficulty: Double = EASY
+    private lateinit var difficultyButton: Button
 
     // buttons
     private lateinit var btnEasy: Button
@@ -34,6 +36,9 @@ class MainActivity : AppCompatActivity() {
         btnHard = findViewById(R.id.btnHard)
         btnStartGame = findViewById(R.id.btnStartGame)
 
+        // Initialize the difficultyButton after btnEasy is initialized
+        difficultyButton = btnEasy
+
         val difficultyButtons = listOf(btnEasy, btnMed, btnHard)
 
         // set difficulty button onClickListener
@@ -54,11 +59,35 @@ class MainActivity : AppCompatActivity() {
 
     private fun onDifficultyButtonClick(view: View) {
         val button = view as Button
-
         when (button.text) {
-            "Easy" -> difficulty = EASY
-            "Medium" -> difficulty = MED
-            "Hard" -> difficulty = HARD
+            "Easy" -> {
+                if (difficultyButton.text == "Medium") {
+                    difficultyButton.setBackgroundColor(ContextCompat.getColor(this, R.color.darkYellow))
+                } else {
+                    difficultyButton.setBackgroundColor(ContextCompat.getColor(this, R.color.darkRed))
+                }
+                button.setBackgroundColor(ContextCompat.getColor(this, R.color.lightGreen))
+                difficulty = EASY
+            }
+            "Medium" -> {
+                if (difficultyButton.text == "Easy") {
+                    difficultyButton.setBackgroundColor(ContextCompat.getColor(this, R.color.darkGreen))
+                } else {
+                    difficultyButton.setBackgroundColor(ContextCompat.getColor(this, R.color.darkRed))
+                }
+                button.setBackgroundColor(ContextCompat.getColor(this, R.color.lightYellow))
+                difficulty = MED
+            }
+            "Hard" -> {
+                if (difficultyButton.text == "Easy") {
+                    difficultyButton.setBackgroundColor(ContextCompat.getColor(this, R.color.darkGreen))
+                } else {
+                    difficultyButton.setBackgroundColor(ContextCompat.getColor(this, R.color.darkYellow))
+                }
+                button.setBackgroundColor(ContextCompat.getColor(this, R.color.lightRed))
+                difficulty = HARD
+            }
         }
+        difficultyButton = button
     }
 }

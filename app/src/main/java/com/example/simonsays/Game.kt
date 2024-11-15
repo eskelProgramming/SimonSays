@@ -20,7 +20,7 @@ const val HARD = 2.00
  * @property timer The amount of time the player has to make a play.
  * @constructor Creates a [Game] with [difficulty] set to [EASY] if otherwise not provided.
  * */
-class Game(private var difficulty: Double) : Parcelable {
+class Game(var difficulty: Double) : Parcelable {
     private var sequence: MutableList<String>
     private var turn = 0
     val timer= 5.00 /  difficulty

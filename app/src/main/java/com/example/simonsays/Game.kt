@@ -15,15 +15,17 @@ const val HARD = 2.00
  * Represents a single *Game* object.
  *
  * @param difficulty Determines the timer difficulty for the game.
- * @property sequence A list of Strings to keep track of the button order.
+ * @property sequence A list of Strings to keep track of the button order. The String stored is the button name.
  * @property turn The current turn.
  * @property timer The amount of time the player has to make a play.
  * @constructor Creates a [Game] with [difficulty] set to [EASY] if otherwise not provided.
  * */
 class Game(var difficulty: Double) : Parcelable {
-    private var sequence: MutableList<String>
-    private var turn = 0
+    var sequence: MutableList<String>
+    var turn = 0
+    var currentIndex = 0
     val timer= 5.00 /  difficulty
+    var gameOver = false
 
     init {
         sequence = mutableListOf()

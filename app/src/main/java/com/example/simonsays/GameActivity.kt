@@ -2,10 +2,8 @@ package com.example.simonsays
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -24,10 +22,7 @@ class GameActivity : AppCompatActivity() {
     private lateinit var btnBlue: Button
     private lateinit var buttons: List<Button>
     private lateinit var tvDifficulty: TextView
-    private lateinit var tvTimer: TextView
-    private var timer: CountDownTimer? = null
-    private var timeLeftInMillis: Long = 0
-    private var timerRunning: Boolean = false
+    private lateinit var tvScore: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,14 +34,11 @@ class GameActivity : AppCompatActivity() {
             insets
         }
 
-        // Retrieve the Game object from the intent
         game = intent.getParcelableExtra("game") ?: throw IllegalStateException("Game object is missing")
 
-        // Initialize the TextViews
         tvDifficulty = findViewById(R.id.tvDifficulty)
-        tvTimer = findViewById(R.id.tvTimer)
+        tvScore = findViewById(R.id.tvScore)
 
-        // Initialize the buttons
         btnHome = findViewById(R.id.btnReturnToHome)
         btnGreen = findViewById(R.id.btnGreen)
         btnRed = findViewById(R.id.btnRed)
@@ -55,7 +47,6 @@ class GameActivity : AppCompatActivity() {
 
         buttons = listOf(btnGreen, btnRed, btnYellow, btnBlue)
 
-        // Set the difficulty text based on the game object
         when (game.difficulty) {
             EASY -> tvDifficulty.text = "Difficulty: EASY"
             MED -> tvDifficulty.text = "Difficulty: MEDIUM"
@@ -67,134 +58,98 @@ class GameActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Start the game
-        playGame()
+        setButtonListeners()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            playGame()
+        }, 1000)
     }
 
     private fun playGame() {
-        pickButton() // Ensure at least one button is picked at the start
-        showSequence {
-            timeLeftInMillis = game.timer.toLong() * 1000
-            startTimer()
-            setButtonListeners()
+        if (game.gameOver) {
+            return
         }
+        selectButton()
+        displaySequence()
     }
 
-    private fun showSequence(onSequenceShown: () -> Unit) {
-        pauseTimer()
+    private fun selectButton() {
+        val button = buttons[Random.nextInt(0, 4)]
+        game.sequence.add(button)
+    }
+
+    private fun displaySequence() {
+        disableButtons()
         val handler = Handler(Looper.getMainLooper())
+
         var delay = 0L
 
-        for (buttonId in game.sequence) {
-            val button = findViewById<Button>(buttonId.toInt())
+        for (button in game.sequence) {
             handler.postDelayed({
                 lightUpButton(button)
             }, delay)
-
-            delay += 1500 // 1.5 seconds delay between each button
+            delay += (1500 / game.difficulty).toLong() // Move the delay forward for the next button
         }
 
-        handler.postDelayed({
-            onSequenceShown()
-        }, delay)
-        restartTimer()
-    }
-
-    private fun pickButton() {
-        val buttonIndex = Random.nextInt(0, buttons.size)
-        val button = buttons[buttonIndex]
-
-        game.sequence.add(button.id.toString())
-        Log.d("GameActivity", "Button picked: ${button.id}")
-        Log.d("GameActivity", "Current sequence: ${game.sequence}")
+        // Enable the buttons after the entire sequence has been displayed and turned off
+        enableButtons()
     }
 
     private fun lightUpButton(button: Button) {
-        Log.d("GameActivity", "Lighting up button with ID: ${button.id}")
+        val handler = Handler(Looper.getMainLooper())
 
-        // Set to light color
         button.setBackgroundColor(
             when (button.id) {
                 R.id.btnGreen -> ContextCompat.getColor(this, R.color.lightGreen)
                 R.id.btnRed -> ContextCompat.getColor(this, R.color.lightRed)
                 R.id.btnYellow -> ContextCompat.getColor(this, R.color.lightYellow)
                 R.id.btnBlue -> ContextCompat.getColor(this, R.color.lightBlue)
-                else -> ContextCompat.getColor(this, R.color.skyBlue) // Fallback color
+                else -> ContextCompat.getColor(this, R.color.skyBlue)
             }
         )
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            Log.d("GameActivity", "Setting button back to dark color with ID: ${button.id}")
-
-            // Set to dark color
+        handler.postDelayed({
             button.setBackgroundColor(
                 when (button.id) {
                     R.id.btnGreen -> ContextCompat.getColor(this, R.color.darkGreen)
                     R.id.btnRed -> ContextCompat.getColor(this, R.color.darkRed)
                     R.id.btnYellow -> ContextCompat.getColor(this, R.color.darkYellow)
                     R.id.btnBlue -> ContextCompat.getColor(this, R.color.darkBlue)
-                    else -> ContextCompat.getColor(this, R.color.skyBlue) // Fallback color
+                    else -> ContextCompat.getColor(this, R.color.skyBlue)
                 }
             )
-        }, 1000) // 1000 milliseconds delay
+        }, (1000 / game.difficulty).toLong()) // Turn off the button after 1 second
+
     }
 
-    private fun startTimer() {
-        timer = object : CountDownTimer(timeLeftInMillis, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                timeLeftInMillis = millisUntilFinished
-                updateTimerText()
-            }
-
-            override fun onFinish() {
-                tvTimer.text = "Time's up!"
-                game.gameOver = true
-                // Handle end of game logic here
-            }
-        }.start()
-
-        timerRunning = true
-    }
-
-    private fun pauseTimer() {
-        timer?.cancel()
-        timerRunning = false
-    }
-
-    private fun updateTimerText() {
-        val secondsLeft = (timeLeftInMillis / 1000).toInt()
-        tvTimer.text = "Timer: $secondsLeft"
-    }
 
     private fun setButtonListeners() {
         for (button in buttons) {
             button.setOnClickListener {
-                // Handle button press
-                restartTimer()
-
                 // Logic to check if the button pressed is correct
-                if (game.sequence[game.currentIndex] == button.id.toString()) {
+                if (game.sequence[game.currentIndex].id == button.id) {
                     game.currentIndex++
+
                 } else {
                     game.gameOver = true
-                    tvTimer.text = "Wrong Button!"
+                    disableButtons()
+                    tvScore.text = "Game over! Final Score: ${game.sequence.size - 1}"
                 }
-
                 if (game.currentIndex >= game.sequence.size) {
                     // Move to next round
                     game.currentIndex = 0
-                    pickButton()
-                    showSequence {
-                        restartTimer()
-                    }
+                    tvScore.text = "Score: ${game.sequence.size}"
+                    playGame()
                 }
             }
         }
     }
 
-    private fun restartTimer() {
-        pauseTimer()
-        timeLeftInMillis = game.timer.toLong() * 1000
-        startTimer()
+    private fun disableButtons() {
+        buttons.forEach { it.isEnabled = false }
+    }
+
+    private fun enableButtons() {
+        buttons.forEach { it.isEnabled = true}
     }
 }

@@ -2,6 +2,7 @@ package com.example.simonsays
 
 import android.os.Parcel
 import android.os.Parcelable
+import android.widget.Button
 
 // The player's timer to give a response is divided by the difficulty
 /** A difficulty of 1.00 */
@@ -21,7 +22,7 @@ const val HARD = 2.00
  * @constructor Creates a [Game] with [difficulty] set to [EASY] if otherwise not provided.
  * */
 class Game(var difficulty: Double) : Parcelable {
-    var sequence: MutableList<String>
+    var sequence: MutableList<Button>
     var turn = 0
     var currentIndex = 0
     val timer= 5.00 /  difficulty
@@ -39,7 +40,6 @@ class Game(var difficulty: Double) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readDouble()
     ) {
-        sequence = parcel.createStringArrayList()?.toMutableList() ?: mutableListOf()
         turn = parcel.readInt()
     }
 
@@ -51,7 +51,6 @@ class Game(var difficulty: Double) : Parcelable {
      */
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeDouble(difficulty)
-        parcel.writeStringList(sequence)
         parcel.writeInt(turn)
     }
 

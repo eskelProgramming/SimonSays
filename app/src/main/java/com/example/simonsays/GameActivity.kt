@@ -118,7 +118,7 @@ class GameActivity : AppCompatActivity() {
                     else -> ContextCompat.getColor(this, R.color.skyBlue)
                 }
             )
-        }, (1000 / game.difficulty).toLong()) // Turn off the button after 1 second
+        }, (1000 / game.difficulty).toLong()) // Turn off the button after the time is up
 
     }
 
